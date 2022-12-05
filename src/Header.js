@@ -4,31 +4,41 @@ import './Header.css';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import StorefrontIcon from '@material-ui/icons/Storefront';
 import SearchIcon from '@material-ui/icons/Search';
+import {Link} from 'react-router-dom';
+import { useStateValue } from './StateProvider';
 
 function Header() {
+  const [{basket}, dispatch] = useStateValue();
+  
   return (
     <div className='header'>
-      <div className="header__logo">
-          <StorefrontIcon className='header__logoImage' fontSize='large'/>
-          <h2 className="header__logoTitle">eSHop</h2>
-      </div>
+      <Link to='/' style={{textDecoration:'none'}}>
+          <div className="header__logo">
+              <StorefrontIcon className='header__logoImage' fontSize='large'/>
+              <h2 className="header__logoTitle">eSHop</h2>
+          </div>
+      </Link>
       <div className="header__search">
           <input type="text" className="header__searchInput" /> 
           <SearchIcon className='header__searchIcon'/> 
       </div>
       <div className="header__nav">
             <div className="nav__item">
-            <span className="nav__itemLineOne">Hello Guest</span>
-            <span className="nav__itemLineTwo">Sign In</span>
+              <Link to='/login' style={{textDecoration:'none',    display: 'flex',flexFlow: 'column' , color: 'white'}}>
+                  <span className="nav__itemLineOne">Hello Guest</span>
+                  <span className="nav__itemLineTwo">Sign In</span>
+              </Link>
             </div>
             <div className="nav__item">
             <span className="nav__itemLineOne">Your</span>
             <span className="nav__itemLineTwo">Shop</span>
             </div>
-            <div className="nav__item">
-            <span className="nav__itemLineOne"><ShoppingBasketIcon className='nav__itemBasket'/> </span>
-            <span className="nav__itemLineTwo nav__basketCount">0</span>
-            </div>
+            <Link to='/checkout' style={{ textDecoration: 'none'}}>
+              <div className="nav__itemBasket">
+                <span className="nav__itemLineOne w30"><ShoppingBasketIcon className='nav__itemBasket'/> </span>
+                <span className="nav__itemLineTwo nav__basketCount">{basket.length}</span>
+              </div>
+            </Link>
       </div>
     </div>
   )
